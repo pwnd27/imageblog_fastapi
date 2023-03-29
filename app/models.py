@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing_extensions import Annotated
+from sqlalchemy import String
 from sqlalchemy.orm import (
     DeclarativeBase,
     Mapped,
@@ -8,7 +9,7 @@ from sqlalchemy.orm import (
 
 
 str50 = Annotated[str, 50]
-intpk = Annotated[int, mapped_column(primary_key=True, autoincrement=True)]
+intpk = Annotated[int, mapped_column(primary_key=True, autoincrement=True, index=True)]
 datetime_now = Annotated[datetime, mapped_column(default=datetime.utcnow)]
 
 
@@ -19,17 +20,17 @@ class Base(DeclarativeBase):
 
 
 class User(Base):
-    __tablename_ = 'users'
+    __tablename__ = 'users'
 
     id: Mapped[intpk]
     email: Mapped[str50]
     hashed_password: Mapped[str50]
 
 
-class Profile(Base):
-    pass
+# class Profile(Base):
+#     pass
 
 
-class Image(Base):
-    pass
+# class Image(Base):
+#     pass
 
