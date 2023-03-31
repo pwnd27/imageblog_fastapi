@@ -7,7 +7,7 @@ import schemas
 import models
 
 
-async def get_user(session: AsyncSession, email: EmailStr) -> models.User:
+async def get_user(session: AsyncSession, email: EmailStr) -> models.User | None:
     return await session.scalar(select(models.User).where(models.User.email == email))
     
 
