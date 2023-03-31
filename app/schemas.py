@@ -13,5 +13,5 @@ class CreateUser(UserBase):
     password_confirm: str
 
 
-class LoginUser(UserBase):
+class User(UserBase):
     password: constr(min_length=8)

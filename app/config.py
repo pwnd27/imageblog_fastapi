@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from datetime import timedelta
 
 
-class Settings(BaseModel):
+class Settings(BaseSettings):
     authjwt_access_token_expires: timedelta = timedelta(minutes=15)
     authjwt_refresh_token_expires: timedelta = timedelta(days=30)
     authjwt_secret_key: str
