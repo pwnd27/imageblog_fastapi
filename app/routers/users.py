@@ -1,23 +1,23 @@
 from fastapi import APIRouter, HTTPException, Depends, Request, status
 from fastapi_jwt_auth import AuthJWT
 from sqlalchemy.ext.asyncio import AsyncSession
-from dependencies import get_session
-import schemas
-import service
+from app.dependencies import get_session
+from app import schemas
+from app import crud
 
 
 router = APIRouter()
 
 
-@router.post('/signup', status_code=status.HTTP_201_CREATED, summary='Create new user', response_model=schemas.UserBase)
-async def signup(user: schemas.CreateUser, session: AsyncSession = Depends(get_session)):
-    db_user = await service.get_user(session=session, email=user.email)
+@router.post('/signup', status_code=status.HTTP_201_CREATED, summary='Create new user')
+async def create_user(user: schemas.CreateUser, session: AsyncSession = Depends(get_session)) -> schemas.UserBase:
+    db_user = await crud.get_user(session=session, email=user.email)
     if db_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail='Пользователь с такой почтой уже существует',
         )
-    return await service.create_user(session=session, user=user)
+    return await crud.create_user(session=session, user=user)
 
 
 # @router.post('/login')

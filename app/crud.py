@@ -1,10 +1,10 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from pydantic import EmailStr
-from utils import get_hashed_password
+from app.utils import get_hashed_password
 
-import schemas
-import models
+from app import schemas
+from app import models
 
 
 async def get_user(session: AsyncSession, email: EmailStr) -> models.User | None:

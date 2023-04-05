@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database import async_session
-from config import Settings
+from app.database import async_session
+from app.config import Settings
 from fastapi_jwt_auth import AuthJWT
 
 
