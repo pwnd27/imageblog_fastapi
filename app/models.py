@@ -5,12 +5,11 @@ from sqlalchemy.orm import (
     DeclarativeBase,
     Mapped,
     mapped_column,
-    MappedAsDataclass,
 )
 
 
 str50 = Annotated[str, 50]
-intpk = Annotated[int, mapped_column(primary_key=True, autoincrement=True, index=True)]
+intpk = Annotated[int, mapped_column(primary_key=True, autoincrement=True)]
 timestamp = Annotated[datetime, mapped_column(default=func.now())]
 
 
@@ -25,7 +24,7 @@ class User(Base):
     __tablename__ = 'users'
 
     id: Mapped[intpk]
-    email: Mapped[str50]
+    email: Mapped[str50] = mapped_column(index=True, unique=True)
     hashed_password: Mapped[str50]
 
     def __repr__(self) -> str:

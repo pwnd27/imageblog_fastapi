@@ -2,11 +2,11 @@ import pytest
 from _pytest.monkeypatch import MonkeyPatch
 from httpx import AsyncClient
 from app.main import app
-from app import crud
+from app.routers.users import crud
 from app import models
 from sqlalchemy.ext.asyncio import AsyncSession
 from pydantic import EmailStr
-from app import schemas
+from app.routers.users import schemas
 
 
 @pytest.mark.asyncio

@@ -1,8 +1,8 @@
-import pytest
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import sessionmaker
+# import pytest
+# from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+# from sqlalchemy.orm import sessionmaker
 
-from app.models import Base, User
+# from app.models import Base, User
 
 
 # @pytest.fixture(scope='function')
