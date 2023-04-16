@@ -51,7 +51,7 @@ async def login(user: schemas.LoginUser, session: async_session, authorize: auth
     return response
     
 
-@router.post('/refresh')
+@router.get('/refresh')
 async def refresh(authorize: authjwt) -> JSONResponse:
     authorize.jwt_refresh_token_required()
     current_user = authorize.get_jwt_subject()
@@ -61,7 +61,7 @@ async def refresh(authorize: authjwt) -> JSONResponse:
     return response
  
 
-@router.delete('/logout')
+@router.get('/logout')
 async def logout(authorize: authjwt) -> JSONResponse:
     authorize.jwt_required()
     response = JSONResponse(content={'msg': 'Успешный выход из системы'})
