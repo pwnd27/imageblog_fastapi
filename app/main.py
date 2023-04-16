@@ -22,5 +22,5 @@ def authjwt_exception_handler(request: Request, exc: AuthJWTException) -> JSONRe
     )
 
 
-app.include_router(auth.router, tags=['Users'], prefix='/users')
+app.include_router(auth.router, tags=['Auth'], prefix='/auth')
 app.include_router(users.router, tags=['Users'], prefix='/users')
