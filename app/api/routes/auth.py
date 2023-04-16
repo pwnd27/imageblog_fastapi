@@ -26,7 +26,7 @@ async def create_user(user: schemas.CreateUser, session: async_session) -> Any:
     user_in_db = await crud.get_user(email=user.email, session=session)
     if user_in_db:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_409_CONFLICT,
             detail='Пользователь с такой почтой уже существует',
         )
     return await crud.create_user(user=user.dict(), session=session)
@@ -49,7 +49,7 @@ async def login(user: schemas.LoginUser, session: async_session, authorize: auth
     authorize.set_access_cookies(access_token, response=response)
     authorize.set_refresh_cookies(refresh_token, response=response)
     return response
-
+    
 
 @router.post('/refresh')
 async def refresh(authorize: authjwt) -> JSONResponse:
@@ -67,10 +67,3 @@ async def logout(authorize: authjwt) -> JSONResponse:
     response = JSONResponse(content={'msg': 'Успешный выход из системы'})
     authorize.unset_jwt_cookies(response=response)
     return response
-
-
-@router.get('/me', response_model=schemas.User)
-async def current_user(authorize: authjwt) -> Any:
-    authorize.jwt_required()
-    current_user = authorize.get_jwt_subject()
-    return {'user': current_user}
