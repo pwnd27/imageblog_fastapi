@@ -6,7 +6,7 @@ from app.api import models
 
 
 @pytest.mark.asyncio
-async def test_register_should_return_error_409_when_user_exist(monkeypatch, client, user) -> None:
+async def test_register_should_return_error_409_when_user_exist(monkeypatch, client) -> None:
     data = {
         'email': 'test@mail.ru', 
         'password': 'testtest', 
@@ -15,7 +15,6 @@ async def test_register_should_return_error_409_when_user_exist(monkeypatch, cli
  
     async def mock_get_user(email, session) -> models.User:
         return models.User(email=data['email'], hashed_password=data['password'])
- 
     monkeypatch.setattr(service, 'get_user', mock_get_user)
 
     response = await client.post('/auth/signup', json=data)
@@ -32,12 +31,10 @@ async def test_register_when_not_exist_in_db(monkeypatch, client) -> None:
     
     async def mock_get_user(email, session) -> None:
         return None
- 
     monkeypatch.setattr(service, 'get_user', mock_get_user)
     
     async def mock_create_user(user, session) -> models.User:
         return models.User(email=data['email'], hashed_password=data['password'])
- 
     monkeypatch.setattr(service, 'create_user', mock_create_user)
 
     response = await client.post('/auth/signup', json=data)
@@ -64,7 +61,6 @@ async def test_login_when_user_not_exist_in_db(monkeypatch, client) -> None:
     
     async def mock_get_user(email, session) -> None:
         return None
-    
     monkeypatch.setattr(service, 'get_user', mock_get_user)
     
     response = await client.post('/auth/login', json=data)
@@ -79,7 +75,6 @@ async def test_login_when_user_is_exist_but_wrong_pass(monkeypatch, client, user
     
     async def mock_get_user(email, session) -> models.User:
         return models.User(email=user.email, hashed_password=user.hashed_password)
-    
     monkeypatch.setattr(service, 'get_user', mock_get_user)
     
     response = await client.post('/auth/login', json=data)
@@ -94,7 +89,6 @@ async def test_login_when_user_is_exist_success_sign_in(monkeypatch, client, use
     
     async def mock_get_user(email, session) -> models.User:
         return models.User(email=user.email, hashed_password=user.hashed_password)
-    
     monkeypatch.setattr(service, 'get_user', mock_get_user)
     
     response = await client.post('/auth/login', json=data)
