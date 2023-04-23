@@ -3,6 +3,12 @@ from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
+    POSTGRES_HOSTNAME: str
+    DATABASE_PORT: int
+    POSTGRES_DB: str
+
     AUTHJWT_SECRET_KEY: str
 
     class Config:

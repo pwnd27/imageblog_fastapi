@@ -65,9 +65,9 @@ async def test_login_when_user_not_exist_in_db(monkeypatch, client) -> None:
     response = await client.post('/auth/login', json=data)
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
     assert response.json()['detail'] == 'Неверная почта или пароль'
-    assert response.headers.get('set-cookie') == None
-    
-    
+    assert response.headers.get('set-cookie') is None
+
+
 @pytest.mark.asyncio
 async def test_login_when_user_is_exist_but_wrong_pass(monkeypatch, client, user) -> None:
     data = {'email': 'test@mail.ru', 'password': 'test_wrong_pass'}
@@ -79,9 +79,9 @@ async def test_login_when_user_is_exist_but_wrong_pass(monkeypatch, client, user
     response = await client.post('/auth/login', json=data)
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
     assert response.json()['detail'] == 'Неверная почта или пароль'
-    assert response.headers.get('set-cookie') == None
-    
-    
+    assert response.headers.get('set-cookie') is None
+
+
 @pytest.mark.asyncio
 async def test_login_when_user_is_exist_success_sign_in(monkeypatch, client, user) -> None:
     data = {'email': 'test@mail.ru', 'password': 'qwerty123'}
@@ -93,9 +93,9 @@ async def test_login_when_user_is_exist_success_sign_in(monkeypatch, client, use
     response = await client.post('/auth/login', json=data)
     assert response.status_code == status.HTTP_200_OK
     assert response.json()['msg'] == 'Успешный вход в систему'
-    assert response.headers.get('set-cookie') != None
-    
-    
+    assert response.headers.get('set-cookie') is not None
+
+
 @pytest.mark.asyncio
 async def test_refresh_with_cookie(user_cookies, client) -> None:
     response = await client.get('/auth/refresh', cookies=user_cookies)
