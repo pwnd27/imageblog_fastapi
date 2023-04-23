@@ -34,15 +34,15 @@ async def register(user: schemas.CreateUser, session: async_session) -> schemas.
 
 @router.post('/login')
 async def login(user: schemas.LoginUser, session: async_session, authorize: authjwt) -> JSONResponse:
-    credentialials_exception = HTTPException(
+    credentials_exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Неверная почта или пароль",
         )
     user_in_db = await service.get_user(email=user.email, session=session)
     if not user_in_db:
-        raise credentialials_exception
+        raise credentials_exception
     if not await verify_password(user.password, user_in_db.hashed_password):
-        raise credentialials_exception
+        raise credentials_exception
     access_token = authorize.create_access_token(subject=user.email)
     refresh_token = authorize.create_refresh_token(subject=user.email)
     response = JSONResponse(content={'msg': 'Успешный вход в систему'})

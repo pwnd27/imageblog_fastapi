@@ -31,7 +31,7 @@ async def session():
 async def user(session):
     test_user = User(
         email='test@mail.ru', 
-        hashed_password='$2b$12$EAxARHzgjkvqxwZtLhjwYO14skTGQKU68RWuTHnVfH46Uve6TN9Ry' # pass 'qwerty123'
+        hashed_password='$2b$12$EAxARHzgjkvqxwZtLhjwYO14skTGQKU68RWuTHnVfH46Uve6TN9Ry' # pass 'qwerty123' # type: ignore
     ) 
     session.add(test_user)
     await session.commit()

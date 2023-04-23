@@ -7,7 +7,7 @@ from app.api import service
 async def test_get_user_when_exist_in_db(session, user) -> None:
     email = 'test@mail.ru'    
     user = await service.get_user(email=email, session=session)
-    assert user != None
+    assert user is not None
     assert email == user.email
     
     
@@ -15,9 +15,9 @@ async def test_get_user_when_exist_in_db(session, user) -> None:
 async def test_get_user_when_not_exist_in_db(session) -> None:
     email = 'testtest@mail.ru'
     user = await service.get_user(email=email, session=session)
-    assert user == None
-    
-    
+    assert user is None
+
+
 @pytest.mark.asyncio
 async def test_create_user_when_not_exist_in_db(session) -> None:
     user_data = {'email': 'test2@mail.ru', 'password': 'test_password'}

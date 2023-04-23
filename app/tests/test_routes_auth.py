@@ -1,5 +1,4 @@
 import pytest
-from httpx import Cookies
 from fastapi import status
 from app.api import service
 from app.api import models
